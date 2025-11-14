@@ -6,17 +6,17 @@
 }
 
 :root {
-    --primary-color: #f7b2bd;
-    --secondary-color: #4c4f6a;
-    --accent-color: #b8d4ff;
-    --text-color: #2f2e41;
-    --text-light: #7f7d95;
-    --bg-color: #fffefb;
-    --bg-light: #f8f6ff;
-    --bg-hero: #fff8f3;
-    --border-color: #efe7f4;
-    --shadow: 0 20px 80px rgba(76, 79, 106, 0.08);
-    --shadow-hover: 0 30px 90px rgba(76, 79, 106, 0.15);
+    --primary-color: #06b6d4;
+    --secondary-color: #0f172a;
+    --accent-color: #3b82f6;
+    --text-color: #1e293b;
+    --text-light: #64748b;
+    --bg-color: #f8fafc;
+    --bg-light: #f1f5f9;
+    --bg-hero: #f0f9ff;
+    --border-color: #e2e8f0;
+    --shadow: 0 20px 80px rgba(15, 23, 42, 0.08);
+    --shadow-hover: 0 30px 90px rgba(15, 23, 42, 0.15);
 }
 
 html {
@@ -106,7 +106,7 @@ body {
 }
 
 .btn-nav:hover {
-    background-color: #ede9ff;
+    background-color: #e0f2fe;
 }
 
 .hamburger {
@@ -149,7 +149,7 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background-color: rgba(247, 178, 189, 0.25);
+    background-color: rgba(6, 182, 212, 0.15);
     color: var(--primary-color);
     padding: 8px 18px;
     border-radius: 999px;
@@ -164,7 +164,7 @@ body {
     height: 8px;
     border-radius: 50%;
     background-color: var(--primary-color);
-    box-shadow: 0 0 0 6px rgba(247, 178, 189, 0.25);
+    box-shadow: 0 0 0 6px rgba(6, 182, 212, 0.15);
 }
 
 .hero-title {
@@ -211,7 +211,7 @@ body {
 
 .hero-specialties li i {
     color: var(--primary-color);
-    background-color: rgba(247, 178, 189, 0.25);
+    background-color: rgba(6, 182, 212, 0.15);
     border-radius: 50%;
     width: 26px;
     height: 26px;
@@ -254,7 +254,7 @@ body {
 .btn-ghost {
     background: transparent;
     color: var(--secondary-color);
-    border: 1px solid rgba(76, 79, 106, 0.2);
+    border: 1px solid rgba(15, 23, 42, 0.2);
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -291,7 +291,7 @@ body {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: rgba(184, 212, 255, 0.35);
+    background-color: rgba(59, 130, 246, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -344,10 +344,58 @@ body {
     box-shadow: var(--shadow);
 }
 
+.scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-light);
+    animation: bounce 2s infinite;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.scroll-indicator span {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.scroll-indicator i {
+    font-size: 1.2rem;
+}
+
+.scroll-indicator:hover {
+    color: var(--primary-color);
+}
+
+/* Side Animation Classes */
+.slide-in-left {
+    opacity: 0;
+    transform: translateX(-100px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.slide-in-right {
+    opacity: 0;
+    transform: translateX(100px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.slide-in-left.animate,
+.slide-in-right.animate {
+    opacity: 1;
+    transform: translateX(0);
+}
+
 /* About Section */
 .about {
     padding: 80px 20px;
     background-color: var(--bg-color);
+    overflow: hidden;
 }
 
 .section-title {
@@ -438,6 +486,7 @@ body {
 .journey {
     padding: 80px 20px;
     background-color: var(--bg-light);
+    overflow: hidden;
 }
 
 .journey-content {
@@ -483,6 +532,7 @@ body {
 .projects {
     padding: 80px 20px;
     background-color: var(--bg-color);
+    overflow: hidden;
 }
 
 .projects-grid {
@@ -540,6 +590,7 @@ body {
 .contact {
     padding: 80px 20px;
     background-color: var(--bg-light);
+    overflow: hidden;
 }
 
 .contact-subtitle {

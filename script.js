@@ -1,27 +1,47 @@
-// Hero typing effect
+// Hero typing effect with multiple roles
 const typedElement = document.getElementById('typed-name');
 if (typedElement) {
-    const typingText = typedElement.dataset.text || typedElement.textContent.trim();
-    const typingSpeed = 150;
-    const restartDelay = 2000;
+    const roles = [
+        'a Full Stack Developer',
+        'an ML Enthusiast'
+    ];
+    
+    let currentRoleIndex = 0;
     let charIndex = 0;
-
-    typedElement.textContent = '';
+    let isDeleting = false;
+    const typingSpeed = 100;
+    const deletingSpeed = 50;
+    const pauseBetweenRoles = 2000;
+    const pauseAfterComplete = 1000;
 
     const type = () => {
-        if (charIndex <= typingText.length) {
-            typedElement.textContent = typingText.substring(0, charIndex);
+        const currentRole = roles[currentRoleIndex];
+        
+        if (!isDeleting && charIndex <= currentRole.length) {
+            // Typing forward
+            typedElement.textContent = currentRole.substring(0, charIndex);
             charIndex++;
             setTimeout(type, typingSpeed);
-        } else {
+        } else if (!isDeleting && charIndex > currentRole.length) {
+            // Pause after completing a role
             setTimeout(() => {
-                charIndex = 0;
-                typedElement.textContent = '';
+                isDeleting = true;
                 type();
-            }, restartDelay);
+            }, pauseAfterComplete);
+        } else if (isDeleting && charIndex > 0) {
+            // Deleting backward
+            charIndex--;
+            typedElement.textContent = currentRole.substring(0, charIndex);
+            setTimeout(type, deletingSpeed);
+        } else if (isDeleting && charIndex === 0) {
+            // Move to next role
+            isDeleting = false;
+            currentRoleIndex = (currentRoleIndex + 1) % roles.length;
+            setTimeout(type, pauseBetweenRoles);
         }
     };
 
+    // Start typing
     type();
 }
 
@@ -94,29 +114,75 @@ if (contactForm) {
     });
 }
 
-// Scroll animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
+// Scroll indicator click handler
+const scrollIndicator = document.querySelector('.scroll-indicator');
+if (scrollIndicator) {
+    scrollIndicator.addEventListener('click', () => {
+        const aboutSection = document.querySelector('#about');
+        if (aboutSection) {
+            const offsetTop = aboutSection.offsetTop - 70;
+            window.scrollTo({
+                top: offsetTop,
+                behavior: 'smooth'
+            });
         }
     });
-}, observerOptions);
+}
 
-// Observe elements for scroll animations
+// Side animation observer - triggers every time section enters viewport
+const sideAnimationObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('animate');
+        } else {
+            // Remove animate class when leaving viewport so it can animate again
+            entry.target.classList.remove('animate');
+        }
+    });
+}, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+});
+
+// Apply side animations to sections
 document.addEventListener('DOMContentLoaded', () => {
+    // Apply alternating side animations to main sections
+    const sections = document.querySelectorAll('#about, #journey, #projects, #contact');
+    sections.forEach((section, index) => {
+        // Alternate between left and right
+        if (index % 2 === 0) {
+            section.classList.add('slide-in-left');
+        } else {
+            section.classList.add('slide-in-right');
+        }
+        sideAnimationObserver.observe(section);
+    });
+
+    // Keep existing animations for cards
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const cardObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            } else {
+                // Reset when leaving viewport so it can animate again
+                entry.target.style.opacity = '0';
+                entry.target.style.transform = 'translateY(30px)';
+            }
+        });
+    }, observerOptions);
+
     const animateElements = document.querySelectorAll('.project-card, .journey-item, .skill-category');
     animateElements.forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(30px)';
         el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
+        cardObserver.observe(el);
     });
 });
 
