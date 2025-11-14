@@ -87,7 +87,6 @@ if (contactForm) {
         const message = formData.get('message');
         
         // Here you would typically send the data to a server
-        // For now, we'll just show an alert
         alert(`Thank you for your message, ${name}! We'll get back to you soon.`);
         
         // Reset form
