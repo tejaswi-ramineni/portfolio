@@ -30,5 +30,3 @@ Personal portfolio website showcasing my projects, skills, and experience as a F
 
 ---
 
-Built with ❤️ by Tejaswi Ramineni
-
